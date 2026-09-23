@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment | Cinematic Show</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body data-page="payment">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="Cinematic Show home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>CINEMATIC SHOW</span>
+      </a>
+      <nav class="top-nav" aria-label="Main navigation">
+        <a href="index.html" data-nav>Home</a>
+        <a href="movies.html" data-nav>Movies</a>
+        <a href="theatres.html" data-nav>Theatres</a>
+        <a href="offers.html" data-nav>Offers</a>
+        <a href="bookings.html" data-nav>My Bookings</a>
+        <a href="help.html" data-nav>Help</a>
+      </nav>
+      <div class="header-actions">
+        <label class="location-selector" aria-label="Select city">
+          <span>📍</span>
+          <select data-location-select aria-label="Choose location">
+            <option value="Chennai">Chennai</option>
+            <option value="Trichy">Trichy</option>
+            <option value="Coimbatore">Coimbatore</option>
+            <option value="Madurai">Madurai</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Hyderabad">Hyderabad</option>
+          </select>
+        </label>
+        <button class="icon-btn" aria-label="Search movies">🔍</button>
+        <button class="icon-btn" aria-label="Open voice assistant" data-assistant-toggle>🎙️</button>
+        <div class="profile-pill" aria-label="Profile">
+          <span class="avatar">A</span>
+          <span>Profile</span>
+        </div>
+        <button class="icon-btn menu-toggle hidden" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-shell">
+    <div class="container checkout-grid">
+      <section class="panel" style="padding: 22px;">
+        <h1 class="section-title">Payment</h1>
+        <div class="payment-options">
+          <button class="payment-option active" type="button" data-payment-method="UPI">UPI</button>
+          <button class="payment-option" type="button" data-payment-method="Credit Card">Credit Card</button>
+          <button class="payment-option" type="button" data-payment-method="Debit Card">Debit Card</button>
+          <button class="payment-option" type="button" data-payment-method="Net Banking">Net Banking</button>
+        </div>
+
+        <div class="panel" data-payment-fieldset>
+          <div class="card-form active" data-upi-form>
+            <div class="form-field">
+              <label for="upiId">UPI ID</label>
+              <input id="upiId" data-upi-id type="text" placeholder="name@upi" />
+            </div>
+          </div>
+          <div class="card-form hidden" data-credit-card-form>
+            <div class="form-grid">
+              <div class="form-field full">
+                <label for="cardNumber">Card Number</label>
+                <input id="cardNumber" data-card-number type="text" placeholder="1234 5678 9012 3456" />
+              </div>
+              <div class="form-field">
+                <label for="expiry">Expiry</label>
+                <input id="expiry" data-card-expiry type="text" placeholder="MM/YY" />
+              </div>
+              <div class="form-field">
+                <label for="cvv">CVV</label>
+                <input id="cvv" data-card-cvv type="password" placeholder="123" />
+              </div>
+              <div class="form-field full">
+                <label for="cardholderName">Cardholder Name</label>
+                <input id="cardholderName" data-card-name type="text" placeholder="Name on card" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="security-note">Demo Payment — No real money will be charged.</div>
+        <div style="margin-top: 20px;">
+          <button class="btn btn-primary" type="button" data-process-payment>Pay <span data-payment-amount>₹0</span></button>
+        </div>
+      </section>
+
+      <aside class="summary-box panel" style="padding: 20px;">
+        <h3>Booking Summary</h3>
+        <div class="summary-list" data-checkout-summary></div>
+      </aside>
+    </div>
+  </main>
+
+  <div class="voice-assistant">
+    <button class="assistant-fab pulsing" type="button" aria-label="CineBot assistant" data-assistant-toggle>🎙️</button>
+    <div class="assistant-popup" data-assistant-popup>
+      <div class="assistant-header">
+        <div class="assistant-name">
+          <span class="assistant-avatar">C</span>
+          <span>CineBot</span>
+        </div>
+        <span class="listening-indicator"><span class="listening-ring"></span></span>
+      </div>
+      <div class="assistant-body" data-assistant-chat></div>
+      <div class="assistant-input">
+        <input type="text" placeholder="Ask CineBot..." data-assistant-input aria-label="Ask CineBot" />
+        <button class="btn btn-primary" type="button" data-assistant-send>Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/voice.js"></script>
+  <script src="js/booking.js"></script>
+  <script src="js/payment.js"></script>
+</body>
+</html>

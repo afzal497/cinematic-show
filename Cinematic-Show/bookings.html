@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Bookings | Cinematic Show</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="Cinematic Show home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>CINEMATIC SHOW</span>
+      </a>
+      <nav class="top-nav" aria-label="Main navigation">
+        <a href="index.html" data-nav>Home</a>
+        <a href="movies.html" data-nav>Movies</a>
+        <a href="theatres.html" data-nav>Theatres</a>
+        <a href="offers.html" data-nav>Offers</a>
+        <a href="bookings.html" data-nav>My Bookings</a>
+        <a href="help.html" data-nav>Help</a>
+      </nav>
+      <div class="header-actions">
+        <label class="location-selector" aria-label="Select city">
+          <span>📍</span>
+          <select data-location-select aria-label="Choose location">
+            <option value="Chennai">Chennai</option>
+            <option value="Trichy">Trichy</option>
+            <option value="Coimbatore">Coimbatore</option>
+            <option value="Madurai">Madurai</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Hyderabad">Hyderabad</option>
+          </select>
+        </label>
+        <button class="icon-btn" aria-label="Search movies">🔍</button>
+        <button class="icon-btn" aria-label="Open voice assistant" data-assistant-toggle>🎙️</button>
+        <div class="profile-pill" aria-label="Profile">
+          <span class="avatar">A</span>
+          <span>Profile</span>
+        </div>
+        <button class="icon-btn menu-toggle hidden" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-shell">
+    <div class="container">
+      <h1 class="section-title">My Bookings</h1>
+      <div class="booking-list" data-bookings-list></div>
+    </div>
+  </main>
+
+  <div class="voice-assistant">
+    <button class="assistant-fab pulsing" type="button" aria-label="CineBot assistant" data-assistant-toggle>🎙️</button>
+    <div class="assistant-popup" data-assistant-popup>
+      <div class="assistant-header">
+        <div class="assistant-name">
+          <span class="assistant-avatar">C</span>
+          <span>CineBot</span>
+        </div>
+        <span class="listening-indicator"><span class="listening-ring"></span></span>
+      </div>
+      <div class="assistant-body" data-assistant-chat></div>
+      <div class="assistant-input">
+        <input type="text" placeholder="Ask CineBot..." data-assistant-input aria-label="Ask CineBot" />
+        <button class="btn btn-primary" type="button" data-assistant-send>Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/voice.js"></script>
+  <script src="js/booking.js"></script>
+  <script>
+    function renderBookings() {
+      const list = document.querySelector('[data-bookings-list]');
+      const bookings = appUtils.getBookings();
+      if (!bookings.length) {
+        list.innerHTML = `<div class="empty-state"><h3>No bookings yet</h3><p>Your confirmed reservations will appear here.</p></div>`;
+        return;
+      }
+      list.innerHTML = bookings.map((booking) => `
+        <article class="booking-item">
+          <img src="${booking.poster || 'assets/images/posters/leo.svg'}" alt="${booking.movieTitle} poster" data-poster data-title="${booking.movieTitle}" data-genre="Cinema" data-language="Now Showing" loading="lazy" onerror="handlePosterError(this)" />
+          <div class="booking-body">
+            <h3>${booking.movieTitle}</h3>
+            <p class="text-muted">${booking.theatre} • ${booking.date} • ${booking.time}</p>
+            <p class="text-muted">Seats: ${booking.seats.join(', ')}</p>
+            <p class="text-muted">Amount: ${appUtils.currency(booking.amount || 0)}</p>
+            <span class="badge ${booking.status === 'Cancelled' ? 'status-cancelled' : 'status-ok'}">${booking.status || 'Confirmed'}</span>
+          </div>
+          <div class="booking-actions">
+            <button class="btn btn-secondary" type="button" onclick="window.location.href='booking-success.html'">View Ticket</button>
+            <button class="btn btn-secondary" type="button" onclick="window.print()">Print</button>
+            <button class="btn btn-danger" type="button" data-cancel-booking="${booking.bookingId}">Cancel Booking</button>
+          </div>
+        </article>
+      `).join('');
+
+      document.querySelectorAll('[data-cancel-booking]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const id = button.dataset.cancelBooking;
+          appUtils.updateBookingStatus(id, 'Cancelled');
+          renderBookings();
+        });
+      });
+    }
+    renderBookings();
+  </script>
+</body>
+</html>

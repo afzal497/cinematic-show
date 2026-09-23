@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Help | Cinematic Show</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="Cinematic Show home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>CINEMATIC SHOW</span>
+      </a>
+      <nav class="top-nav" aria-label="Main navigation">
+        <a href="index.html" data-nav>Home</a>
+        <a href="movies.html" data-nav>Movies</a>
+        <a href="theatres.html" data-nav>Theatres</a>
+        <a href="offers.html" data-nav>Offers</a>
+        <a href="bookings.html" data-nav>My Bookings</a>
+        <a href="help.html" data-nav>Help</a>
+      </nav>
+      <div class="header-actions">
+        <label class="location-selector" aria-label="Select city">
+          <span>📍</span>
+          <select data-location-select aria-label="Choose location">
+            <option value="Chennai">Chennai</option>
+            <option value="Trichy">Trichy</option>
+            <option value="Coimbatore">Coimbatore</option>
+            <option value="Madurai">Madurai</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Hyderabad">Hyderabad</option>
+          </select>
+        </label>
+        <button class="icon-btn" aria-label="Search movies">🔍</button>
+        <button class="icon-btn" aria-label="Open voice assistant" data-assistant-toggle>🎙️</button>
+        <div class="profile-pill" aria-label="Profile">
+          <span class="avatar">A</span>
+          <span>Profile</span>
+        </div>
+        <button class="icon-btn menu-toggle hidden" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-shell">
+    <div class="container">
+      <h1 class="section-title">Help & Support</h1>
+      <div class="info-grid">
+        <section class="panel" style="padding: 22px;">
+          <h3>Booking flow</h3>
+          <p class="text-muted">Search for a movie, open details, choose a theatre and showtime, select seats, fill checkout details, pay via demo payment, and view your ticket in My Bookings.</p>
+          <ul class="text-muted">
+            <li>Search by movie title, actor, genre, language, theatre, or location.</li>
+            <li>Use the AI seat recommendation for the best available seats.</li>
+            <li>Coupons: CINE10, MOVIE50, FIRSTSHOW</li>
+            <li>Voice commands such as “Show action movies”, “Search Leo”, and “Open theatres” work with CineBot.</li>
+          </ul>
+        </section>
+        <section class="panel" style="padding: 22px;">
+          <h3>Voice assistant commands</h3>
+          <ul class="text-muted">
+            <li>Show me action movies</li>
+            <li>Search for Leo</li>
+            <li>Show Tamil movies</li>
+            <li>Find IMAX movies</li>
+            <li>Book Leo</li>
+            <li>Show my bookings</li>
+            <li>Go to home</li>
+            <li>Open theatres</li>
+            <li>Help</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <div class="voice-assistant">
+    <button class="assistant-fab pulsing" type="button" aria-label="CineBot assistant" data-assistant-toggle>🎙️</button>
+    <div class="assistant-popup" data-assistant-popup>
+      <div class="assistant-header">
+        <div class="assistant-name">
+          <span class="assistant-avatar">C</span>
+          <span>CineBot</span>
+        </div>
+        <span class="listening-indicator"><span class="listening-ring"></span></span>
+      </div>
+      <div class="assistant-body" data-assistant-chat></div>
+      <div class="assistant-input">
+        <input type="text" placeholder="Ask CineBot..." data-assistant-input aria-label="Ask CineBot" />
+        <button class="btn btn-primary" type="button" data-assistant-send>Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/voice.js"></script>
+</body>
+</html>

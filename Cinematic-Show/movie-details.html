@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie Details | Cinematic Show</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="Cinematic Show home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>CINEMATIC SHOW</span>
+      </a>
+      <nav class="top-nav" aria-label="Main navigation">
+        <a href="index.html" data-nav>Home</a>
+        <a href="movies.html" data-nav>Movies</a>
+        <a href="theatres.html" data-nav>Theatres</a>
+        <a href="offers.html" data-nav>Offers</a>
+        <a href="bookings.html" data-nav>My Bookings</a>
+        <a href="help.html" data-nav>Help</a>
+      </nav>
+      <div class="header-actions">
+        <label class="location-selector" aria-label="Select city">
+          <span>📍</span>
+          <select data-location-select aria-label="Choose location">
+            <option value="Chennai">Chennai</option>
+            <option value="Trichy">Trichy</option>
+            <option value="Coimbatore">Coimbatore</option>
+            <option value="Madurai">Madurai</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Hyderabad">Hyderabad</option>
+          </select>
+        </label>
+        <button class="icon-btn" aria-label="Search movies">🔍</button>
+        <button class="icon-btn" aria-label="Open voice assistant" data-assistant-toggle>🎙️</button>
+        <div class="profile-pill" aria-label="Profile">
+          <span class="avatar">A</span>
+          <span>Profile</span>
+        </div>
+        <button class="icon-btn menu-toggle hidden" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="detail-shell">
+    <div class="container" data-movie-detail> </div>
+  </main>
+
+  <div class="voice-assistant">
+    <button class="assistant-fab pulsing" type="button" aria-label="CineBot assistant" data-assistant-toggle>🎙️</button>
+    <div class="assistant-popup" data-assistant-popup>
+      <div class="assistant-header">
+        <div class="assistant-name">
+          <span class="assistant-avatar">C</span>
+          <span>CineBot</span>
+        </div>
+        <span class="listening-indicator"><span class="listening-ring"></span></span>
+      </div>
+      <div class="assistant-body" data-assistant-chat></div>
+      <div class="assistant-input">
+        <input type="text" placeholder="Ask CineBot..." data-assistant-input aria-label="Ask CineBot" />
+        <button class="btn btn-primary" type="button" data-assistant-send>Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/voice.js"></script>
+  <script src="js/booking.js"></script>
+  <script>
+    function renderMovieDetail() {
+      const detailRoot = document.querySelector('[data-movie-detail]');
+      const params = new URLSearchParams(window.location.search);
+      const id = Number(params.get('id')) || 1;
+      const movie = appUtils.getMovieById(id) || movieDatabase[0];
+      appUtils.saveRecentMovie(movie.id);
+      bookingState.set({ movieId: movie.id, movie: movie });
+      detailRoot.innerHTML = `
+        <section class="detail-hero" style="background-image: url('${movie.backdrop}')">
+          <div class="detail-inner">
+            <div class="detail-poster">
+              ${posterImage(movie)}
+            </div>
+            <div class="detail-content">
+              <h1>${movie.title}</h1>
+              <div class="detail-stats">
+                <span class="pill">⭐ ${movie.rating}</span>
+                <span class="pill">${movie.genre}</span>
+                <span class="pill">${movie.language}</span>
+                <span class="pill">${movie.duration}</span>
+                <span class="pill">${movie.certificate}</span>
+                <span class="pill">${movie.releaseDate}</span>
+              </div>
+              <p class="detail-copy">${movie.description}</p>
+              <div class="detail-actions">
+                <a class="btn btn-primary" href="theatres.html?id=${movie.id}">Book Tickets</a>
+                <button class="btn btn-secondary" type="button" onclick="window.location.href='movies.html'">Browse More</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="info-grid">
+          <div class="panel">
+            <h3>About the Movie</h3>
+            <p class="text-muted">${movie.description}</p>
+            <div class="cast-list" style="margin-top: 18px;">
+              <div class="cast-item"><div class="cast-avatar">${movie.cast[0].charAt(0)}</div><div><strong>${movie.cast[0]}</strong><br><span class="text-muted">Lead Cast</span></div></div>
+              <div class="cast-item"><div class="cast-avatar">${movie.cast[1].charAt(0)}</div><div><strong>${movie.cast[1]}</strong><br><span class="text-muted">Lead Cast</span></div></div>
+              <div class="cast-item"><div class="cast-avatar">${movie.cast[2].charAt(0)}</div><div><strong>${movie.cast[2]}</strong><br><span class="text-muted">Supporting Cast</span></div></div>
+            </div>
+          </div>
+          <aside class="panel">
+            <h3>Available Formats</h3>
+            <div class="format-list">
+              ${movie.formats.map((format) => `<span class="format-pill">${format}</span>`).join('')}
+            </div>
+          </aside>
+        </section>
+
+        <section class="info-grid" style="margin-top: 24px;">
+          <div class="panel">
+            <h3>Cast & Crew</h3>
+            <div class="cast-list">
+              ${movie.cast.map((person, index) => `
+                <div class="cast-item">
+                  <div class="cast-avatar">${person.charAt(0)}</div>
+                  <div>
+                    <strong>${person}</strong><br>
+                    <span class="text-muted">${index === 0 ? 'Actor' : index === 1 ? 'Actress' : 'Supporting Actor'}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          <div class="panel">
+            <h3>Trailer</h3>
+            <div class="trailer-box">
+              <iframe src="${movie.trailer}" title="${movie.title} trailer" allowfullscreen loading="lazy"></iframe>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+    renderMovieDetail();
+  </script>
+</body>
+</html>

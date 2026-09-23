@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Select Seats | Cinematic Show</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="Cinematic Show home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>CINEMATIC SHOW</span>
+      </a>
+      <nav class="top-nav" aria-label="Main navigation">
+        <a href="index.html" data-nav>Home</a>
+        <a href="movies.html" data-nav>Movies</a>
+        <a href="theatres.html" data-nav>Theatres</a>
+        <a href="offers.html" data-nav>Offers</a>
+        <a href="bookings.html" data-nav>My Bookings</a>
+        <a href="help.html" data-nav>Help</a>
+      </nav>
+      <div class="header-actions">
+        <label class="location-selector" aria-label="Select city">
+          <span>📍</span>
+          <select data-location-select aria-label="Choose location">
+            <option value="Chennai">Chennai</option>
+            <option value="Trichy">Trichy</option>
+            <option value="Coimbatore">Coimbatore</option>
+            <option value="Madurai">Madurai</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Hyderabad">Hyderabad</option>
+          </select>
+        </label>
+        <button class="icon-btn" aria-label="Search movies">🔍</button>
+        <button class="icon-btn" aria-label="Open voice assistant" data-assistant-toggle>🎙️</button>
+        <div class="profile-pill" aria-label="Profile">
+          <span class="avatar">A</span>
+          <span>Profile</span>
+        </div>
+        <button class="icon-btn menu-toggle hidden" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-shell">
+    <div class="container selection-grid">
+      <section>
+        <div style="display:flex; justify-content:space-between; align-items:center; gap: 12px; margin-bottom: 18px;">
+          <h1 class="section-title">Select Your Seats</h1>
+          <button class="btn btn-primary" type="button" data-recommend-seats>Find My Best Seats</button>
+        </div>
+
+        <div class="seat-layout">
+          <div class="screen">SCREEN</div>
+          <div data-seat-layout></div>
+          <div class="seat-legend">
+            <span class="legend-item"><span class="legend-swatch available"></span> Available</span>
+            <span class="legend-item"><span class="legend-swatch premium"></span> Premium</span>
+            <span class="legend-item"><span class="legend-swatch recliner"></span> Recliner</span>
+            <span class="legend-item"><span class="legend-swatch selected"></span> Selected</span>
+            <span class="legend-item"><span class="legend-swatch occupied"></span> Occupied</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="summary-box panel" style="padding: 20px;">
+        <h3>Booking Summary</h3>
+        <div class="summary-list">
+          <div class="summary-item"><span>Movie</span><strong data-seat-movie>Loading...</strong></div>
+          <div class="summary-item"><span>Theatre</span><strong data-seat-theatre>Loading...</strong></div>
+          <div class="summary-item"><span>Date</span><strong data-seat-date>Loading...</strong></div>
+          <div class="summary-item"><span>Time</span><strong data-seat-time>Loading...</strong></div>
+          <div class="summary-item"><span>Seats</span><strong data-seat-summary>No seats selected</strong></div>
+          <div class="summary-item"><span>Selected</span><strong data-seat-count>0</strong></div>
+          <div class="summary-item"><span>Ticket Price</span><strong data-seat-price>₹0</strong></div>
+        </div>
+        <div style="margin-top: 16px;">
+          <button class="btn btn-primary" type="button" data-continue-checkout>Continue to Checkout</button>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div class="voice-assistant">
+    <button class="assistant-fab pulsing" type="button" aria-label="CineBot assistant" data-assistant-toggle>🎙️</button>
+    <div class="assistant-popup" data-assistant-popup>
+      <div class="assistant-header">
+        <div class="assistant-name">
+          <span class="assistant-avatar">C</span>
+          <span>CineBot</span>
+        </div>
+        <span class="listening-indicator"><span class="listening-ring"></span></span>
+      </div>
+      <div class="assistant-body" data-assistant-chat></div>
+      <div class="assistant-input">
+        <input type="text" placeholder="Ask CineBot..." data-assistant-input aria-label="Ask CineBot" />
+        <button class="btn btn-primary" type="button" data-assistant-send>Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/voice.js"></script>
+  <script src="js/booking.js"></script>
+  <script src="js/seats.js"></script>
+  <script>
+    const state = bookingState.get();
+    const movie = appUtils.getMovieById(state.movieId || state.movie?.id || 1);
+    document.querySelector('[data-seat-movie]').textContent = movie.title;
+    document.querySelector('[data-seat-theatre]').textContent = state.theatre || 'Cinematic PVR';
+    document.querySelector('[data-seat-date]').textContent = state.date || 'Tomorrow';
+    document.querySelector('[data-seat-time]').textContent = state.showtime || '07:30 PM';
+  </script>
+</body>
+</html>

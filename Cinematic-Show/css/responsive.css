@@ -1,0 +1,81 @@
+/* Responsive enhancement layer for smaller devices */
+
+@media (max-width: 1200px) {
+  .movie-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 980px) {
+  .top-nav {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 16px;
+    right: 16px;
+    background: rgba(10, 15, 24, 0.96);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 14px;
+    flex-direction: column;
+    align-items: flex-start;
+    display: none;
+  }
+
+  .top-nav.open {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: inline-flex !important;
+  }
+
+  .booking-item {
+    grid-template-columns: 100px 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero h1 {
+    font-size: 2.8rem;
+  }
+
+  .movie-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .summary-box {
+    position: static;
+  }
+
+  .seat-row {
+    grid-template-columns: 24px repeat(10, minmax(18px, 1fr));
+    gap: 5px;
+  }
+}
+
+@media (max-width: 560px) {
+  .header-actions {
+    width: 100%; justify-content: flex-end;
+  }
+
+  .filters {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-actions, .detail-actions, .action-row, .movie-actions {
+    flex-direction: column;
+  }
+
+  .movie-actions .btn,
+  .hero-actions .btn,
+  .detail-actions .btn,
+  .action-row .btn {
+    width: 100%;
+  }
+
+  .search-panel {
+    padding: 10px;
+  }
+}
