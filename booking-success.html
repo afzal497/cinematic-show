@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cinematic Show</title>
-  <meta name="description" content="Cinematic Show movie ticket booking platform" />
+  <title>Booking Confirmed | Cinematic Show</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/responsive.css" />
   <link rel="stylesheet" href="css/animations.css" />
@@ -47,60 +46,19 @@
     </div>
   </header>
 
-  <main>
-    <section class="hero">
-      <div class="container hero-content">
-        <div class="hero-copy">
-          <span class="eyebrow">Now Showing</span>
-          <h1>Your Movie Night Starts Here.</h1>
-          <p class="hero-subtitle">Discover. Choose. Book. Experience.</p>
-          <div class="search-panel">
-            <div class="search-field">
-              <span class="search-icon">🔎</span>
-              <input type="text" placeholder="Search for movies, theatres or languages..." data-search-input aria-label="Search" />
-            </div>
-            <button class="voice-mic" type="button" aria-label="Voice search" data-assistant-toggle>🎤</button>
-            <button class="btn btn-primary" type="button" data-search-button>Search</button>
-            <div class="search-suggestions" data-search-suggestions aria-live="polite"></div>
-          </div>
-          <div class="pill-row" style="margin-top: 18px;">
-            <span class="badge">Leo</span>
-            <span class="badge">Interstellar</span>
-            <span class="badge">Avatar</span>
-            <span class="badge">Tamil movies</span>
-            <span class="badge">IMAX</span>
-          </div>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="movies.html">Explore Movies</a>
-            <a class="btn btn-secondary" href="theatres.html?id=1">Book Tickets</a>
-          </div>
-        </div>
-        <div class="hero-visual" aria-label="Featured movies">
-          <div class="poster-stack">
-            <div class="poster-card" style="background-image: url('assets/images/posters/dune-part-two.svg');"></div>
-            <div class="poster-card" style="background-image: url('assets/images/posters/interstellar.svg');"></div>
-            <div class="poster-card" style="background-image: url('assets/images/posters/leo.svg');"></div>
-            <div class="poster-glow"></div>
-          </div>
-        </div>
+  <main class="main-shell">
+    <div class="container success-box">
+      <div class="success-icon">✓</div>
+      <h1>BOOKING CONFIRMED</h1>
+      <p class="text-muted">Your movie experience is ready!</p>
+      <div class="panel" data-confirmation-details style="padding: 22px; margin-top: 24px; text-align: left;"></div>
+      <div class="action-row">
+        <button class="btn btn-primary" type="button" data-download-ticket>Download Ticket</button>
+        <button class="btn btn-secondary" type="button" data-view-booking>View Booking</button>
+        <button class="btn btn-secondary" type="button" data-book-another>Book Another Movie</button>
+        <button class="btn btn-secondary" type="button" data-home-button>Go Home</button>
       </div>
-    </section>
-
-    <section class="main-shell">
-      <div class="container">
-        <div class="section-title-wrap" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px;">
-          <h2 class="section-title">Recommended For You</h2>
-        </div>
-        <div class="movie-grid" data-recommendations></div>
-      </div>
-    </section>
-
-    <section class="main-shell" style="padding-top: 0;">
-      <div class="container">
-        <h2 class="section-title">My Favorites</h2>
-        <div class="movie-grid" data-favorites-list></div>
-      </div>
-    </section>
+    </div>
   </main>
 
   <div class="voice-assistant">
@@ -125,5 +83,6 @@
   <script src="js/search.js"></script>
   <script src="js/voice.js"></script>
   <script src="js/booking.js"></script>
+  <script src="js/receipt.js"></script>
 </body>
 </html>

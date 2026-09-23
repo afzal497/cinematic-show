@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cinematic Show</title>
-  <meta name="description" content="Cinematic Show movie ticket booking platform" />
+  <title>Digital Ticket | Cinematic Show</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/responsive.css" />
   <link rel="stylesheet" href="css/animations.css" />
@@ -47,60 +46,15 @@
     </div>
   </header>
 
-  <main>
-    <section class="hero">
-      <div class="container hero-content">
-        <div class="hero-copy">
-          <span class="eyebrow">Now Showing</span>
-          <h1>Your Movie Night Starts Here.</h1>
-          <p class="hero-subtitle">Discover. Choose. Book. Experience.</p>
-          <div class="search-panel">
-            <div class="search-field">
-              <span class="search-icon">🔎</span>
-              <input type="text" placeholder="Search for movies, theatres or languages..." data-search-input aria-label="Search" />
-            </div>
-            <button class="voice-mic" type="button" aria-label="Voice search" data-assistant-toggle>🎤</button>
-            <button class="btn btn-primary" type="button" data-search-button>Search</button>
-            <div class="search-suggestions" data-search-suggestions aria-live="polite"></div>
-          </div>
-          <div class="pill-row" style="margin-top: 18px;">
-            <span class="badge">Leo</span>
-            <span class="badge">Interstellar</span>
-            <span class="badge">Avatar</span>
-            <span class="badge">Tamil movies</span>
-            <span class="badge">IMAX</span>
-          </div>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="movies.html">Explore Movies</a>
-            <a class="btn btn-secondary" href="theatres.html?id=1">Book Tickets</a>
-          </div>
-        </div>
-        <div class="hero-visual" aria-label="Featured movies">
-          <div class="poster-stack">
-            <div class="poster-card" style="background-image: url('assets/images/posters/dune-part-two.svg');"></div>
-            <div class="poster-card" style="background-image: url('assets/images/posters/interstellar.svg');"></div>
-            <div class="poster-card" style="background-image: url('assets/images/posters/leo.svg');"></div>
-            <div class="poster-glow"></div>
-          </div>
-        </div>
+  <main class="main-shell">
+    <div class="container">
+      <div class="ticket-card" data-digital-ticket></div>
+      <div class="action-row">
+        <button class="btn btn-primary" type="button" onclick="window.print()">Download Ticket</button>
+        <a class="btn btn-secondary" href="receipt.html">View Receipt</a>
+        <a class="btn btn-secondary" href="bookings.html">My Bookings</a>
       </div>
-    </section>
-
-    <section class="main-shell">
-      <div class="container">
-        <div class="section-title-wrap" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px;">
-          <h2 class="section-title">Recommended For You</h2>
-        </div>
-        <div class="movie-grid" data-recommendations></div>
-      </div>
-    </section>
-
-    <section class="main-shell" style="padding-top: 0;">
-      <div class="container">
-        <h2 class="section-title">My Favorites</h2>
-        <div class="movie-grid" data-favorites-list></div>
-      </div>
-    </section>
+    </div>
   </main>
 
   <div class="voice-assistant">
@@ -125,5 +79,46 @@
   <script src="js/search.js"></script>
   <script src="js/voice.js"></script>
   <script src="js/booking.js"></script>
+  <script>
+    function renderDigitalTicket() {
+      const state = bookingState.get();
+      const movie = appUtils.getMovieById(state.movieId || state.movie?.id || 1);
+      const bookingId = state.bookingId || 'CS2026000001';
+      const seats = (state.seats || []).map((seat) => `${seat.row}${seat.number}`).join(', ') || 'N/A';
+      const amount = state.pricing ? state.pricing.total : 0;
+      const root = document.querySelector('[data-digital-ticket]');
+      root.innerHTML = `
+        <div class="ticket-header">
+          <div>
+            <h2>CINEMATIC SHOW</h2>
+            <p class="text-muted">Digital Ticket</p>
+          </div>
+          <div class="badge status-ok">${state.paymentStatus || 'Paid'}</div>
+        </div>
+        <div class="ticket-body">
+          <div>
+            <div style="display:flex; gap:16px; align-items:center; margin-bottom:16px;">
+              <div class="ticket-poster">
+                ${posterImage(movie)}
+              </div>
+              <div>
+                <h3>${movie.title}</h3>
+                <p class="text-muted">${state.theatre || 'Cinematic PVR'} • Screen 04</p>
+                <p class="text-muted">${state.date || 'Tomorrow'} • ${state.showtime || '07:30 PM'}</p>
+              </div>
+            </div>
+            <div class="summary-list">
+              <div class="summary-item"><span>Booking ID</span><strong>${bookingId}</strong></div>
+              <div class="summary-item"><span>Seats</span><strong>${seats}</strong></div>
+              <div class="summary-item"><span>Amount</span><strong>${appUtils.currency(amount)}</strong></div>
+              <div class="summary-item"><span>Payment</span><strong>${state.paymentStatus || 'Paid'}</strong></div>
+            </div>
+          </div>
+          <div class="qr-box">QR</div>
+        </div>
+      `;
+    }
+    renderDigitalTicket();
+  </script>
 </body>
 </html>

@@ -1,14 +1,4 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false,
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/Cinematic-Show/index.html"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/Cinematic-Show/$1"
-    }
-  ]
+  "trailingSlash": false
 }
